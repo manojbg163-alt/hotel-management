@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; }
+    input, select { margin: 6px 4px; padding: 6px; }
+    #out { margin-top: 12px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Simple Calculator</h1>
+  <div>
+    <select id="op">
+      <option value="add">Add</option>
+      <option value="sub">Subtract</option>
+      <option value="mul">Multiply</option>
+      <option value="div">Divide</option>
+    </select>
+    <input id="a" type="number" step="any" placeholder="First number" />
+    <input id="b" type="number" step="any" placeholder="Second number" />
+    <button id="calc">Calculate</button>
+  </div>
+  <div id="out"></div>
+
+  <script>
+    function fmtOp(op){ return op==='add'?'+':op==='sub'?'-':op==='mul'?'*':'/'; }
+    document.getElementById('calc').addEventListener('click', function(){
+      var a = parseFloat(document.getElementById('a').value);
+      var b = parseFloat(document.getElementById('b').value);
+      if (isNaN(a) || isNaN(b)){
+        document.getElementById('out').textContent = 'Invalid input. Please enter numeric values.';
+        return;
+      }
+      var op = document.getElementById('op').value;
+      var res;
+      if (op === 'add') res = a + b;
+      else if (op === 'sub') res = a - b;
+      else if (op === 'mul') res = a * b;
+      else if (op === 'div'){
+        if (b === 0){ document.getElementById('out').textContent = 'Cannot divide by zero.'; return; }
+        res = a / b;
+      }
+      document.getElementById('out').textContent = a + ' ' + fmtOp(op) + ' ' + b + ' = ' + res;
+    });
+  </script>
+</body>
+</html>
